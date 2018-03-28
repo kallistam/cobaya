@@ -1,0 +1,26 @@
+server:
+  port: 8092
+spring:
+  application:
+    name: cobaya-user
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1/cobaya?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver
+  data:
+    solr:
+      host: http://127.0.0.1:8000/solr/collection1
+  redis:
+    host: 127.0.0.1
+    timeout: 10000
+    port: 6379
+    pool:
+      max-active: 300
+      max-idle: 100
+      min-idle: 50
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

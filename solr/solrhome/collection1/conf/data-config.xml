@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<dataConfig>   
+<dataSource type="JdbcDataSource"   
+		  driver="com.mysql.jdbc.Driver"   
+		  url="jdbc:mysql://localhost:3306/cobaya"   
+		  user="root"   
+		  password="root"/>   
+<document>   
+	<entity name="movie" query="SELECT m.id movie_id,m.`name`,m.synopsis,m.director,m.`cover`,m.actor,m.`createtime`,m.`ishot`,m.`isnew`,m.`score`,m.`movietypeid`,m.isvip,a.name addressname FROM movie m,address a WHERE m.`addressid` = a.`id`">
+		 <field column="movie_id" name="id"/> 
+		 <field column="name" name="movie_name"/>
+		 <field column="synopsis" name="movie_synopsis"/> 
+		 <field column="director" name="movie_director"/> 
+		 <field column="actor" name="movie_actor"/> 
+		 <field column="createtime" name="movie_createtime" />
+		 <field column="addressname" name="movie_address" />
+		 <field column="cover" name="movie_cover" />
+		 <field column="ishot" name="movie_ishot" />
+		 <field column="isnew" name="movie_isnew" />
+		 <field column="score" name="movie_score" />
+		 <field column="movietypeid" name="movie_type" />
+		 <field column="isvip" name="movie_isvip" />
+	</entity>
+</document>   
+
+</dataConfig>

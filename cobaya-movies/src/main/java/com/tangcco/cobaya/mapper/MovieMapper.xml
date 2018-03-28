@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tangcco.cobaya.mapper.MovieMapper">
+
+	<!-- 影片详情 -->
+	<resultMap type="com.tangcco.cobaya.beans.Movie" id="movie_address_movietype">
+		<id column="id" property="id" />
+		<result column="mname" property="name" />
+		<result column="synopsis" property="synopsis" />
+		<result column="url" property="url" />
+		<result column="director" property="director" />
+		<result column="actor" property="actor" />
+		<result column="ismovie" property="ismovie" />
+		<result column="movietypeid" property="movietypeid" />
+		<result column="addressid" property="addressid" />
+		<result column="isvip" property="isvip" />
+		<association property="address" javaType="com.tangcco.cobaya.beans.Address">
+			<result column="name" property="name" />
+		</association>
+		<association property="movietype" javaType="com.tangcco.cobaya.beans.Movietype">
+			<result column="mtname" property="name" />
+		</association>
+	</resultMap>
+
+	<!-- 查询最新的影片信息 (分页) -->
+	<select id="findNewTV" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 0
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movieTypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询最新的影片信息数量 (分页) -->
+	<select id="findNewTVCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie WHERE
+		state = 1
+		AND ismovie = 0
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息 (分页) -->
+	<select id="findHotTV" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 0
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息数量 (分页) -->
+	<select id="findHotTVCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE state = 1
+		AND ismovie = 0
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询评分从高到低的影片信息 (分页) -->
+	<select id="findSorce" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT
+		id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 0
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+		ORDER BY score DESC
+	</select>
+
+	<!-- 查询评分由高到低的影片信息数量 (分页) -->
+	<select id="findSorceCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 0
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 电影块 -->
+	<!-- 查询评分从高到低的电影息 (分页) -->
+	<select id="findSorceMovie" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT
+		id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+		ORDER BY score DESC
+	</select>
+
+	<!-- 查询评分由高到低的电影信息数量 (分页) -->
+	<select id="findSorceMovieCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询最新的影片信息 (分页) -->
+	<select id="findNewMovie" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1 ">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movieTypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询最新的影片信息数量 (分页) -->
+	<select id="findNewMovieCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息 (分页) -->
+	<select id="findHotMovie" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1 ">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movieTypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息数量 (分页) -->
+	<select id="findHotMovieCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 1
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 通过id查询一个影片的详情 -->
+	<select id="loadPlay" resultMap="movie_address_movietype">
+		SELECT m.id,m.`name` mname,
+		m.movietypeid,m.ismovie,m.synopsis,m.url,m.director,m.actor,a.name,m.isvip,m.addressid,
+		mt.name mtname
+		FROM movie m,address a,movietype mt
+		WHERE m.id =
+		#{movieId}
+		AND
+		m.addressid = a.id
+		AND m.movietypeid = mt.id
+	</select>
+
+	<!-- 用户上传的视频 -->
+	<!-- 查询评分从高到底的影片信息 (分页) -->
+	<select id="findSorcePao" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询从高到低的影片信息数量 (分页) -->
+	<select id="findSorcePaoCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息 (分页) -->
+	<select id="findHotPao" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询热门的影片信息数量 (分页) -->
+	<select id="findHotPaoCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		AND ishot = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询最新的影片信息 (分页) -->
+	<select id="findNewPao" resultType="com.tangcco.cobaya.beans.Movie">
+		SELECT id,createtime,`name`,cover,score,isnew,ishot,isvip
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+	<!-- 查询最新的影片信息数量 (分页) -->
+	<select id="findNewPaoCount" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE
+		state = 1
+		AND ismovie = 4
+		AND isnew = 1
+		<if test="addressid != null and addressid != 1">
+			AND addressid = #{addressid}
+		</if>
+		<if test="movieTypeid != null and movieTypeid != 101">
+			AND movietypeid = #{movieTypeid}
+		</if>
+	</select>
+
+</mapper>
